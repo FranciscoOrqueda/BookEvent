@@ -534,6 +534,12 @@ input:focus {
     body {
         padding: 15px;
         background-position: center;
+        align-items: flex-start;
+        padding-top: 20px;
+    }
+
+    .card-container {
+        max-height: calc(100vh - 40px);
     }
 
     .login-content {
@@ -541,19 +547,48 @@ input:focus {
         border-radius: 25px;
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* Custom scrollbar for mobile */
+    .login-content::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .login-content::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+
+    .login-content::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+    }
+
+    .login-content::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
     }
 
     h1 {
         font-size: 28px;
+        margin-bottom: 8px;
     }
 
     .subtitle {
         font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .logo-container {
+        margin-bottom: 25px;
     }
 
     .user-icon {
         width: 90px;
         height: 90px;
+        margin-bottom: 20px;
     }
 
     .user-icon svg {
@@ -586,6 +621,15 @@ input:focus {
     }
 
     .forgot-password {
+        font-size: 13px;
+    }
+
+    .toggle-form {
+        margin-top: 20px;
+        padding-top: 15px;
+    }
+
+    .toggle-form p {
         font-size: 13px;
     }
 }
