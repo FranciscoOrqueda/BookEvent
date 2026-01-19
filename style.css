@@ -15,12 +15,17 @@ body {
     padding: 20px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #ffa17f 100%);
     background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
     position: relative;
     overflow: hidden;
 }
 
-/* Animated gradient background */
+/* Animated gradient background - only on desktop */
+@media (min-width: 769px) {
+    body {
+        animation: gradientShift 15s ease infinite;
+    }
+}
+
 @keyframes gradientShift {
     0% {
         background-position: 0% 50%;
@@ -35,32 +40,36 @@ body {
     }
 }
 
-/* Floating orbs for depth */
-body::before,
-body::after {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.5;
-    animation: float 20s ease-in-out infinite;
-}
+/* Floating orbs for depth - only on desktop */
+@media (min-width: 769px) {
 
-body::before {
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
-    top: -100px;
-    right: -100px;
-    animation-delay: -5s;
-}
+    body::before,
+    body::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(60px);
+        opacity: 0.4;
+        animation: float 20s ease-in-out infinite;
+        will-change: transform;
+    }
 
-body::after {
-    width: 300px;
-    height: 300px;
-    background: radial-gradient(circle, rgba(255, 200, 100, 0.4), transparent);
-    bottom: -50px;
-    left: -50px;
+    body::before {
+        width: 350px;
+        height: 350px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+        top: -100px;
+        right: -100px;
+        animation-delay: -5s;
+    }
+
+    body::after {
+        width: 250px;
+        height: 250px;
+        background: radial-gradient(circle, rgba(255, 200, 100, 0.3), transparent);
+        bottom: -50px;
+        left: -50px;
+    }
 }
 
 @keyframes float {
@@ -70,20 +79,16 @@ body::after {
         transform: translate(0, 0) scale(1);
     }
 
-    33% {
-        transform: translate(30px, -30px) scale(1.1);
-    }
-
-    66% {
-        transform: translate(-20px, 20px) scale(0.9);
+    50% {
+        transform: translate(20px, -20px) scale(1.05);
     }
 }
 
 /* Glassmorphic container */
 .login-container {
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-radius: 30px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -92,7 +97,15 @@ body::after {
     max-width: 440px;
     position: relative;
     overflow: hidden;
-    animation: slideIn 0.6s ease-out;
+}
+
+/* Enhanced blur for desktop */
+@media (min-width: 769px) {
+    .login-container {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        animation: slideIn 0.6s ease-out;
+    }
 }
 
 @keyframes slideIn {
@@ -107,19 +120,22 @@ body::after {
     }
 }
 
-/* Subtle shimmer effect */
-.login-container::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg,
-            transparent,
-            rgba(255, 255, 255, 0.1),
-            transparent);
-    animation: shimmer 8s linear infinite;
+/* Subtle shimmer effect - only on desktop */
+@media (min-width: 769px) {
+    .login-container::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1),
+                transparent);
+        animation: shimmer 8s linear infinite;
+        will-change: transform;
+    }
 }
 
 @keyframes shimmer {
@@ -148,22 +164,33 @@ body::after {
     height: 12px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.4);
-    transition: all 0.3s ease;
 }
 
 .dot:nth-child(1) {
     background: rgba(255, 95, 86, 0.8);
-    animation: pulse 2s ease-in-out infinite;
 }
 
 .dot:nth-child(2) {
     background: rgba(255, 189, 46, 0.8);
-    animation: pulse 2s ease-in-out infinite 0.2s;
 }
 
 .dot:nth-child(3) {
     background: rgba(39, 201, 63, 0.8);
-    animation: pulse 2s ease-in-out infinite 0.4s;
+}
+
+/* Pulse animation only on desktop */
+@media (min-width: 769px) {
+    .dot:nth-child(1) {
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    .dot:nth-child(2) {
+        animation: pulse 2s ease-in-out infinite 0.2s;
+    }
+
+    .dot:nth-child(3) {
+        animation: pulse 2s ease-in-out infinite 0.4s;
+    }
 }
 
 @keyframes pulse {
@@ -190,19 +217,26 @@ body::after {
     height: 110px;
     margin: 0 auto 25px;
     background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.3s ease;
 }
 
-.user-icon:hover {
-    transform: scale(1.05) rotate(5deg);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+/* Enhanced effects only on desktop */
+@media (min-width: 769px) {
+    .user-icon {
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .user-icon:hover {
+        transform: scale(1.05) rotate(5deg);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
 }
 
 .user-icon svg {
@@ -232,7 +266,6 @@ h1 {
 .input-group {
     position: relative;
     margin-bottom: 20px;
-    transition: transform 0.3s ease;
 }
 
 .input-icon {
@@ -245,6 +278,7 @@ h1 {
     fill: rgba(255, 255, 255, 0.7);
     transition: all 0.3s ease;
     z-index: 2;
+    pointer-events: none;
 }
 
 input {
@@ -252,13 +286,24 @@ input {
     padding: 16px 18px 16px 52px;
     border: 1.5px solid rgba(255, 255, 255, 0.3);
     border-radius: 16px;
-    font-size: 15px;
+    font-size: 16px;
+    /* Increased for better mobile readability */
     font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
     color: white;
     font-weight: 400;
+    -webkit-appearance: none;
+    /* Remove iOS default styling */
+    appearance: none;
+}
+
+/* Enhanced blur only on desktop */
+@media (min-width: 769px) {
+    input {
+        backdrop-filter: blur(10px);
+        font-size: 15px;
+    }
 }
 
 input::placeholder {
@@ -270,19 +315,24 @@ input:focus {
     border-color: rgba(255, 255, 255, 0.6);
     background: rgba(255, 255, 255, 0.25);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
 }
 
-input:focus+.input-icon {
-    fill: white;
-    transform: translateY(-50%) scale(1.1);
+/* Transform only on desktop */
+@media (min-width: 769px) {
+    input:focus {
+        transform: translateY(-2px);
+    }
+
+    input:focus+.input-icon {
+        fill: white;
+        transform: translateY(-50%) scale(1.1);
+    }
 }
 
 .login-button {
     width: 100%;
     padding: 17px;
     background: rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(10px);
     border: 1.5px solid rgba(255, 255, 255, 0.4);
     color: white;
     border-radius: 16px;
@@ -290,41 +340,54 @@ input:focus+.input-icon {
     font-weight: 600;
     letter-spacing: 0.5px;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s ease;
     margin-top: 15px;
     text-transform: uppercase;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     position: relative;
     overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    /* Remove tap highlight on mobile */
+    touch-action: manipulation;
+    /* Improve touch responsiveness */
 }
 
-.login-button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: translate(-50%, -50%);
-    transition: width 0.6s, height 0.6s;
-}
+/* Enhanced effects only on desktop */
+@media (min-width: 769px) {
+    .login-button {
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-.login-button:hover::before {
-    width: 300px;
-    height: 300px;
-}
+    .login-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
 
-.login-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    background: rgba(255, 255, 255, 0.35);
-    border-color: rgba(255, 255, 255, 0.6);
+    .login-button:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .login-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        background: rgba(255, 255, 255, 0.35);
+        border-color: rgba(255, 255, 255, 0.6);
+    }
 }
 
 .login-button:active {
-    transform: translateY(-1px);
+    transform: scale(0.98);
+    background: rgba(255, 255, 255, 0.35);
 }
 
 .options {
@@ -333,6 +396,7 @@ input:focus+.input-icon {
     align-items: center;
     margin-top: 25px;
     font-size: 14px;
+    gap: 10px;
 }
 
 .remember-me {
@@ -346,6 +410,8 @@ input:focus+.input-icon {
 .remember-me input[type="checkbox"] {
     width: 18px;
     height: 18px;
+    min-width: 18px;
+    /* Prevent shrinking */
     cursor: pointer;
     accent-color: rgba(255, 255, 255, 0.8);
 }
@@ -356,35 +422,52 @@ input:focus+.input-icon {
     transition: all 0.3s ease;
     font-weight: 500;
     position: relative;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.forgot-password::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: white;
-    transition: width 0.3s ease;
+/* Underline effect only on desktop */
+@media (min-width: 769px) {
+    .forgot-password::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: white;
+        transition: width 0.3s ease;
+    }
+
+    .forgot-password:hover::after {
+        width: 100%;
+    }
+
+    .forgot-password:hover {
+        color: white;
+    }
 }
 
-.forgot-password:hover::after {
-    width: 100%;
-}
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+        background-position: center;
+    }
 
-.forgot-password:hover {
-    color: white;
-}
-
-@media (max-width: 480px) {
     .login-container {
-        padding: 40px 30px;
+        padding: 35px 25px;
         border-radius: 25px;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
     }
 
     h1 {
-        font-size: 30px;
+        font-size: 28px;
+    }
+
+    .subtitle {
+        font-size: 14px;
     }
 
     .user-icon {
@@ -395,5 +478,50 @@ input:focus+.input-icon {
     .user-icon svg {
         width: 45px;
         height: 45px;
+    }
+
+    .input-group {
+        margin-bottom: 16px;
+    }
+
+    input {
+        padding: 14px 16px 14px 48px;
+    }
+
+    .input-icon {
+        left: 15px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .login-button {
+        padding: 15px;
+        font-size: 15px;
+    }
+
+    .options {
+        font-size: 13px;
+        flex-wrap: wrap;
+    }
+
+    .forgot-password {
+        font-size: 13px;
+    }
+}
+
+/* Very small screens */
+@media (max-width: 360px) {
+    .login-container {
+        padding: 30px 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .options {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
     }
 }
