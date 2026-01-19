@@ -84,8 +84,44 @@ body {
     }
 }
 
+/* Flip card container */
+.card-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 440px;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    transition: transform 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.card-front {
+    transform: rotateY(0deg);
+}
+
+.card-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: rotateY(180deg);
+}
+
 /* Glassmorphic container */
-.login-container {
+.login-content {
     background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -94,16 +130,18 @@ body {
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     padding: 50px 40px;
     width: 100%;
-    max-width: 440px;
     position: relative;
     overflow: hidden;
 }
 
 /* Enhanced blur for desktop */
 @media (min-width: 769px) {
-    .login-container {
+    .login-content {
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+    }
+
+    .card-front .login-content {
         animation: slideIn 0.6s ease-out;
     }
 }
@@ -448,6 +486,49 @@ input:focus {
     }
 }
 
+/* Toggle form section */
+.toggle-form {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.toggle-form p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.toggle-link {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.toggle-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: white;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.toggle-link:hover::after {
+    opacity: 1;
+}
+
+.toggle-link:active {
+    transform: scale(0.98);
+}
+
 /* Mobile optimizations */
 @media (max-width: 768px) {
     body {
@@ -455,7 +536,7 @@ input:focus {
         background-position: center;
     }
 
-    .login-container {
+    .login-content {
         padding: 35px 25px;
         border-radius: 25px;
         backdrop-filter: blur(8px);
@@ -511,7 +592,7 @@ input:focus {
 
 /* Very small screens */
 @media (max-width: 360px) {
-    .login-container {
+    .login-content {
         padding: 30px 20px;
     }
 
