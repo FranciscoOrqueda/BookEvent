@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del Cliente</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Client form specific styles */
+        .client-container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .client-content {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 50px 40px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 769px) {
+            .client-content {
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                animation: slideIn 0.6s ease-out;
+            }
+        }
+
+        .client-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .client-icon {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 25px;
+            background: rgba(255, 255, 255, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 769px) {
+            .client-icon {
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        .client-icon svg {
+            width: 55px;
+            height: 55px;
+            fill: white;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .client-title {
+            font-size: 32px;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .client-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 17px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            text-transform: uppercase;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        @media (min-width: 769px) {
+            .submit-button {
+                backdrop-filter: blur(10px);
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+
+            .submit-button::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s;
+            }
+
+            .submit-button:hover::before {
+                width: 300px;
+                height: 300px;
+            }
+
+            .submit-button:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                background: rgba(255, 255, 255, 0.35);
+                border-color: rgba(255, 255, 255, 0.6);
+            }
+        }
+
+        .submit-button:active {
+            transform: scale(0.98);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-link a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (min-width: 769px) {
+            .back-link a::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: white;
+                transition: width 0.3s ease;
+            }
+
+            .back-link a:hover::after {
+                width: 100%;
+            }
+
+            .back-link a:hover {
+                color: white;
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .client-content {
+                padding: 35px 25px;
+                border-radius: 25px;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+
+            .client-header {
+                margin-bottom: 25px;
+            }
+
+            .client-icon {
+                width: 90px;
+                height: 90px;
+                margin-bottom: 20px;
+            }
+
+            .client-icon svg {
+                width: 45px;
+                height: 45px;
+            }
+
+            .client-title {
+                font-size: 26px;
+                margin-bottom: 8px;
+            }
+
+            .client-subtitle {
+                font-size: 14px;
+            }
+
+            .submit-button {
+                padding: 15px;
+                font-size: 15px;
+            }
+
+            .back-link {
+                margin-top: 20px;
+                padding-top: 15px;
+            }
+
+            .back-link a {
+                font-size: 13px;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+            .client-content {
+                padding: 30px 20px;
+            }
+
+            .client-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="client-container">
+        <div class="client-content">
+            <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <div class="client-header">
+                <div class="client-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z" />
+                    </svg>
+                </div>
+                <h1 class="client-title">INFORMACIÓN DEL USUARIO</h1>
+                <p class="client-subtitle">Completa tus datos personales</p>
+            </div>
+
+            <form id="clientForm">
+                <div class="input-group">
+                    <svg class="input-icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                    </svg>
+                    <input type="text" placeholder="Nombre Completo" id="fullName" required>
+                </div>
+
+                <div class="input-group">
+                    <svg class="input-icon" viewBox="0 0 24 24">
+                        <path
+                            d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+                    </svg>
+                    <input type="tel" placeholder="Teléfono de Contacto" id="contactPhone" required>
+                </div>
+
+                <div class="input-group">
+                    <svg class="input-icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                    </svg>
+                    <input type="text" placeholder="Ciudad" id="city" required>
+                </div>
+
+                <button type="submit" class="submit-button">Continuar</button>
+            </form>
+
+            <div class="back-link">
+                <a href="etapados.html">← Volver a selección de cuenta</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Client form handler
+        document.getElementById('clientForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const contactPhone = document.getElementById('contactPhone').value;
+            const city = document.getElementById('city').value;
+
+            console.log('Client information:', { fullName, contactPhone, city });
+
+            alert(`¡Bienvenido ${fullName}! Tus datos han sido registrados.\nTeléfono: ${contactPhone}\nCiudad: ${city}`);
+
+            // Here you would typically send this data to your backend
+            // For now, we'll just show a success message
+            // window.location.href = 'dashboard-cliente.html';
+        });
+
+        // Enhanced input focus effects
+        const inputs = document.querySelectorAll('input[type="text"], input[type="tel"]');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function () {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+
+            input.addEventListener('blur', function () {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecciona tu Tipo de Cuenta</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Account type selection specific styles */
+        .selection-container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .selection-content {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            padding: 50px 40px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (min-width: 769px) {
+            .selection-content {
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                animation: slideIn 0.6s ease-out;
+            }
+        }
+
+        .selection-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .selection-icon {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 25px;
+            background: rgba(255, 255, 255, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 769px) {
+            .selection-icon {
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        .selection-icon svg {
+            width: 55px;
+            height: 55px;
+            fill: white;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .selection-title {
+            font-size: 36px;
+            color: white;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .selection-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        .account-card {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 35px 25px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            text-align: center;
+        }
+
+        @media (min-width: 769px) {
+            .account-card {
+                backdrop-filter: blur(10px);
+            }
+        }
+
+        .account-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .account-card:hover::before {
+            opacity: 1;
+        }
+
+        @media (min-width: 769px) {
+            .account-card:hover {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+                border-color: rgba(255, 255, 255, 0.5);
+                background: rgba(255, 255, 255, 0.25);
+            }
+        }
+
+        .account-card:active {
+            transform: scale(0.98);
+        }
+
+        .account-card.selected {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.6);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .card-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: rgba(255, 255, 255, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 769px) {
+            .account-card:hover .card-icon-wrapper {
+                transform: scale(1.1) rotate(5deg);
+                background: rgba(255, 255, 255, 0.35);
+            }
+        }
+
+        .card-icon-wrapper svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .card-title {
+            font-size: 22px;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-description {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            line-height: 1.6;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .continue-button {
+            width: 100%;
+            padding: 17px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 1.5px solid rgba(255, 255, 255, 0.4);
+            color: white;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .continue-button.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        @media (min-width: 769px) {
+            .continue-button {
+                backdrop-filter: blur(10px);
+                transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+
+            .continue-button.active::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: translate(-50%, -50%);
+                transition: width 0.6s, height 0.6s;
+            }
+
+            .continue-button.active:hover::before {
+                width: 300px;
+                height: 300px;
+            }
+
+            .continue-button.active:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                background: rgba(255, 255, 255, 0.35);
+                border-color: rgba(255, 255, 255, 0.6);
+            }
+        }
+
+        .continue-button:active {
+            transform: scale(0.98);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .back-link a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (min-width: 769px) {
+            .back-link a::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: white;
+                transition: width 0.3s ease;
+            }
+
+            .back-link a:hover::after {
+                width: 100%;
+            }
+
+            .back-link a:hover {
+                color: white;
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .selection-content {
+                padding: 35px 25px;
+                border-radius: 25px;
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+
+            .selection-header {
+                margin-bottom: 30px;
+            }
+
+            .selection-icon {
+                width: 90px;
+                height: 90px;
+                margin-bottom: 20px;
+            }
+
+            .selection-icon svg {
+                width: 45px;
+                height: 45px;
+            }
+
+            .selection-title {
+                font-size: 28px;
+                margin-bottom: 8px;
+            }
+
+            .selection-subtitle {
+                font-size: 14px;
+            }
+
+            .account-card {
+                padding: 30px 20px;
+            }
+
+            .card-icon-wrapper {
+                width: 70px;
+                height: 70px;
+                margin-bottom: 15px;
+            }
+
+            .card-icon-wrapper svg {
+                width: 35px;
+                height: 35px;
+            }
+
+            .card-title {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            .card-description {
+                font-size: 13px;
+            }
+
+            .continue-button {
+                padding: 15px;
+                font-size: 15px;
+            }
+
+            .back-link {
+                margin-top: 20px;
+                padding-top: 15px;
+            }
+
+            .back-link a {
+                font-size: 13px;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+            .selection-content {
+                padding: 30px 20px;
+            }
+
+            .selection-title {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="selection-container">
+        <div class="selection-content">
+            <div class="dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <div class="selection-header">
+                <div class="selection-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V7.89l7-3.11v8.2z" />
+                    </svg>
+                </div>
+                <h1 class="selection-title">TIPO DE CUENTA</h1>
+                <p class="selection-subtitle">Selecciona cómo deseas usar BookEvent</p>
+            </div>
+
+            <div class="cards-grid">
+                <!-- Reservar Salón Card -->
+                <div class="account-card" data-type="reservar">
+                    <div class="card-icon-wrapper">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z" />
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Quiero Reservar</h2>
+                    <p class="card-description">Busca y reserva el salón perfecto para tu evento especial</p>
+                </div>
+
+                <!-- Publicar Salón Card -->
+                <div class="account-card" data-type="publicar">
+                    <div class="card-icon-wrapper">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                        </svg>
+                    </div>
+                    <h2 class="card-title">Quiero Publicar</h2>
+                    <p class="card-description">Publica tu salón y conecta con clientes que buscan espacios</p>
+                </div>
+            </div>
+
+            <button class="continue-button" id="continueBtn">Continuar</button>
+
+            <div class="back-link">
+                <a href="index.html">← Volver al inicio de sesión</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Account type selection functionality
+        const accountCards = document.querySelectorAll('.account-card');
+        const continueBtn = document.getElementById('continueBtn');
+        let selectedType = null;
+
+        accountCards.forEach(card => {
+            card.addEventListener('click', function () {
+                // Remove selected class from all cards
+                accountCards.forEach(c => c.classList.remove('selected'));
+
+                // Add selected class to clicked card
+                this.classList.add('selected');
+
+                // Store selected type
+                selectedType = this.getAttribute('data-type');
+
+                // Enable continue button
+                continueBtn.classList.add('active');
+            });
+        });
+
+        continueBtn.addEventListener('click', function () {
+            if (selectedType) {
+                console.log('Selected account type:', selectedType);
+
+                if (selectedType === 'reservar') {
+                    // Redirect to client information form
+                    window.location.href = 'etapatrescliente.html';
+                } else if (selectedType === 'publicar') {
+                    // Redirect to publishing information form
+                    window.location.href = 'etapatres.html';
+                }
+            }
+        });
+
+        // Enhanced card hover effects for desktop
+        if (window.innerWidth > 768) {
+            accountCards.forEach(card => {
+                card.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+
+                card.addEventListener('mouseleave', function () {
+                    if (!this.classList.contains('selected')) {
+                        this.style.transform = 'translateY(0) scale(1)';
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
