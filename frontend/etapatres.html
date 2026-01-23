@@ -331,21 +331,54 @@
     </div>
 
     <script>
+        const API_URL = 'http://localhost:5000/api';
+
         // Publisher form handler
-        document.getElementById('publisherForm').addEventListener('submit', function (e) {
+        document.getElementById('publisherForm').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const responsibleName = document.getElementById('responsibleName').value;
             const contactPhone = document.getElementById('contactPhone').value;
             const city = document.getElementById('city').value;
 
-            console.log('Publisher information:', { responsibleName, contactPhone, city });
+            // Recuperar datos temporales del index.html
+            const tempUserData = JSON.parse(sessionStorage.getItem('tempUserData'));
 
-            alert(`¡Gracias ${responsibleName}! Tus datos han sido registrados.\nTeléfono: ${contactPhone}\nCiudad: ${city}`);
+            if (!tempUserData) {
+                alert('No se encontraron datos de registro inicial. Por favor regrese al inicio.');
+                window.location.href = 'index.html';
+                return;
+            }
 
-            // Here you would typically send this data to your backend
-            // For now, we'll just show a success message
-            // window.location.href = 'dashboard-publicador.html';
+            try {
+                const response = await fetch(`${API_URL}/auth/complete-publisher`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        responsibleName,
+                        email: tempUserData.email,
+                        password: tempUserData.password,
+                        phone: contactPhone,
+                        city
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    alert('¡Cuenta de publicador creada exitosamente!');
+                    sessionStorage.removeItem('tempUserData');
+                    // Aquí podrías redirigir a un dashboard
+                    // window.location.href = 'dashboard.html';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión con el servidor.');
+            }
         });
 
         // Enhanced input focus effects
